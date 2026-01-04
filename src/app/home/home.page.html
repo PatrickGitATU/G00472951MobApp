@@ -8,16 +8,32 @@
 
 <ion-content [fullscreen]="true">
  
-  <ion-input label = "Enter Ingredients" placeholder = "ingredients" [(ngModel)] = "ingredients"></ion-input> 
-<ion-button >Search</ion-button >
+  <ion-input label = "Enter Ingredients" placeholder = "add here" [(ngModel)] = "ingredients"></ion-input> 
+<ion-button (click)="showRecipesForXYZ()" > Search </ion-button >
   
-  <!-- 
-  
-  placeholder = "keyword" [(ngModel)] = "ingredients"
-  
-  -->
 
-<!--(click)="showRecipesForXYZ()" -->
+
+<div [hidden]="elementIsHidden">
+  This content will be hidden initially and shown when the button is clicked.
+
+<ion-card *ngFor="let ingredient of ingredientsInfo">
+
+
+  <img alt="" 
+    src = {{ingredient.image}} />
+  <ion-card-header>
+    <ion-card-title>Card Title</ion-card-title>
+    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    Here's a small text description for the card content. Nothing more, nothing less.
+  </ion-card-content>
+
+</ion-card>
+
+
+</div>
 
 
 </ion-content>
