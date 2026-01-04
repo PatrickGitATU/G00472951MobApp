@@ -22,12 +22,21 @@
   <img alt="" 
     src = {{ingredient.image}} />
   <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+    <ion-card-title>{{ingredient.title}}</ion-card-title>
+    
+    <ion-card-subtitle></ion-card-subtitle>
   </ion-card-header>
+  
+  
+  <ion-card-content>
+    {{ingredient.id}}
+    <ion-button (click)="goToRecipeDetails(ingredient.id)" > DETAILS </ion-button >
+      
+  </ion-card-content>
 
   <ion-card-content>
     Here's a small text description for the card content. Nothing more, nothing less.
+    {{ingredient.id}}
   </ion-card-content>
 
 </ion-card>
@@ -38,5 +47,3 @@
 
 </ion-content>
 
-
- 

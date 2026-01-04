@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
 elementIsHidden: boolean = true; //hidden initially
 ingredients:string = "";
 ingredientsInfo!:any;
+ingredientID:string="";
 
 //https://api.spoonacular.com/recipes/complexSearch?apiKey=70759a4f7911402abcc53d3c51d3b759&query=rice
 
@@ -38,15 +39,23 @@ url: "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + this.apiKey +
   constructor(private router: Router, private ds: DataService, private mhs:MyHttpService) { }
   
   
-  ngOnInit() {
+  // this ngOnInit() initialises the search field. Made Async to force a promise
+  // in order to have the storage variable reinitialised following previous searches
+  // so the field is empty on all page loads instead of just the first time it loads
+  async ngOnInit() {  
 
-this.getKW();
+  //this.ds.set("kw", "");
+  //this.getKW();
+   await this.ds.set("kw", ""); // Reset kw in storge to a blank string on page load 
+   await this.getKW(); // Fetch updated kw value
+  
    
   }
 
 //this.ingredients = "ingredients";
 
   async getKW(){ 
+
 
  this.ingredients =  await this.ds.get('kw'); 
 
@@ -78,4 +87,19 @@ this.getKW();
    //this.router.navigate(['/recipe-details']);
   
   }
+
+
+async goToRecipeDetails(idPassedFromIngredientObject: string ) {
+this.ingredientID=idPassedFromIngredientObject;
+ await  this.ds.set("ingrdntID", this.ingredientID) //value in storage will be arg1 (arg1, arg2)
+
+this.router.navigate(['/recipe-details']);
+
+
+   
+}
+
+  
+
+
 }
