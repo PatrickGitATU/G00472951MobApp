@@ -1,13 +1,36 @@
-<!--
+
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Ingredients</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-title></ion-title>
+
+<!--
+<ion-buttons slot="end">
+  <ion-button (click)="addToFavourites(ingrdntIDHere)">
+    <ion-icon 
+      [name]="isFavorite ? 'heart' : 'heart-outline'" 
+      [color]="isFavorite ? 'danger' : 'medium'"
+      aria-label="Favorite">
+    </ion-icon>
+  </ion-button>
+</ion-buttons>
+
 -->
 
+
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+
+
+
 <ion-content [fullscreen]="true">
- {{ingrdntIDHere}}
+  
+  <!--{{ingrdntIDHere}} -->
+
   <h1>Ingredients</h1>
 
 
@@ -23,18 +46,20 @@
   <img [src]="'https://img.spoonacular.com/ingredients_100x100/' + ingredientExt.image" alt="ingredientExt.image" />   
 
   <ion-card-header>
-    <ion-card-title>{{ingredientExt.title}}</ion-card-title>
+  <ion-card-title>{{ingredientExt.title}}</ion-card-title>
     
-    <ion-card-subtitle></ion-card-subtitle>
+  <ion-card-subtitle></ion-card-subtitle>
   </ion-card-header>
   
   
   <ion-card-content>
-    {{ingredientExt.original}}
-    {{ingredientExt.measures.amount}}
-    <p>Amount: {{ingredientExt.measures.us.amount }} {{ ingredientExt.measures.us.unitShort }}</p>
+    <!-- show original -->
+   <p>{{ingredientExt.original}}</p>
+    
+   <!-- show measures -->
+    <p>{{ingredientExt.measures.metric.amount }} {{ ingredientExt.measures.metric.unitLong }}</p>
 
-    {{ingredientExt.id}}
+   <!-- {{ingredientExt.id}}-->
   
       
   </ion-card-content>
@@ -66,8 +91,53 @@
 
 
 
+<h1>Instructions</h1>
+<div [innerHTML]="ingredientsFullDetails.instructions"></div>   
+
+ <!-- <p>{{ingredientsFullDetails.instructions}}</p> -->
+
+<ion-card *ngFor="let instructions of analyzedInstructionsSteps" >
+  <ion-card-header>
+  <ion-card-subtitle></ion-card-subtitle>
+  <ion-card-title> </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+ <p> {{instructions.number}} : {{instructions.step}}</p>
+  </ion-card-content>
+</ion-card>
+
+<p> </p>
+  <p> </p>
+
+ <!-- https://ionicframework.com/docs/v4/api/buttons -->  
+ <!-- https://ionicframework.com/docs/api/buttons#buttons-placement --> 
+ <!--  https://ionicframework.com/docs/api/icon -->  
+   <!--  Icon won't work...tried everything... followed documentation -->  
+<ion-button aria-label="Favorite" (click)="addToFavourites(ingrdntIDHere)" > {{this.buttonStatusText }} 
+<ion-icon name="heart"  aria-hidden="true"></ion-icon> 
+</ion-button>
 
 
+
+
+
+<p> </p>
+<p> </p>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<ion-card >
+  <ion-card-header>
+  <ion-card-subtitle></ion-card-subtitle>
+  <ion-card-title> </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+ <p> </p>
+  </ion-card-content>
+</ion-card>
 </ion-content>
 
 
