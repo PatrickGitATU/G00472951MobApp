@@ -7,39 +7,65 @@
 -->
 
 <ion-content [fullscreen]="true">
+ {{ingrdntIDHere}}
   <h1>Ingredients</h1>
 
-  
 
 
-<div >
+<ion-card *ngFor="let ingredientExt of extendedIngredients">
 
+ 
 
-<ion-card>
+   <!--<ion-img [src]="ingredientExt.image" alt="Ingredient"></ion-img>-->
+  <!-- <img [src]="ingredientExt.image" alt="Ingredient" />-->
 
+  <!--https://spoonacular.com/food-api/docs/show-images--> <!-- [src]="..." needed for property binding Ionic angualar -->
+  <img [src]="'https://img.spoonacular.com/ingredients_100x100/' + ingredientExt.image" alt="ingredientExt.image" />   
 
-  <img alt="" 
-    src =  />
   <ion-card-header>
-    <ion-card-title></ion-card-title>
+    <ion-card-title>{{ingredientExt.title}}</ion-card-title>
     
     <ion-card-subtitle></ion-card-subtitle>
   </ion-card-header>
   
   
   <ion-card-content>
-    <ion-button > Add to Favourites </ion-button >
+    {{ingredientExt.original}}
+    {{ingredientExt.measures.amount}}
+    <p>Amount: {{ingredientExt.measures.us.amount }} {{ ingredientExt.measures.us.unitShort }}</p>
+
+    {{ingredientExt.id}}
+  
+      
   </ion-card-content>
 
-  <ion-card-content>
-   {{ingrdntIDHere}}
-    
-  </ion-card-content>
 
 </ion-card>
 
 
-</div>
+
+
+
+
+ <!-- <img alt="" src = {{ingredientsFullDetails.image}}/>-->
+<!-- <img [src]="i.image" alt="Ingredient Image" style="width:50px; height:50px; margin-right:10px;">-->
+
+ <!-- 
+<ion-list>
+  <ion-item *ngFor="let i of extendedIngredients">
+    
+    <ion-label>{{i.id}}</ion-label>
+    <ion-label>{{i.aisle}}</ion-label>
+    <ion-label>{{i.image}}</ion-label>
+  </ion-item>
+</ion-list>
+ 
+-->
+
+
+
+
+
 
 
 </ion-content>
