@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common'; // needed for ngFor
 })
 export class HomePage implements OnInit {
 
-elementIsHidden: boolean = true; //hidden initially
+elementIsHidden: boolean = true; //page element to be hidden initially until ingredients entered into search
 ingredients:string = "";
 ingredientsInfo!:any;
 ingredientID:string="";

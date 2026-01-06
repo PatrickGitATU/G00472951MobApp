@@ -56,9 +56,14 @@
     <!-- show original -->
    <p>{{ingredientExt.original}}</p>
     
-   <!-- show measures -->
-    <p>{{ingredientExt.measures.metric.amount }} {{ ingredientExt.measures.metric.unitLong }}</p>
+   <!-- show measures for metric -->
+    <p [hidden]="!elementIsHiddenMeasurements">{{ingredientExt.measures.metric.amount }} {{ ingredientExt.measures.metric.unitLong }}</p>
 
+    <!-- show measures for us-->
+    <p [hidden]="elementIsHiddenMeasurements">{{ingredientExt.measures.us.amount }} {{ ingredientExt.measures.us.unitLong }}</p>
+
+
+    <!-- <div [hidden]="elementIsHidden"></div> -->
    <!-- {{ingredientExt.id}}-->
   
       

@@ -43,6 +43,21 @@ analyzedInstructionsSteps:any =[];
 buttonFavouriteStatus: boolean = false;
 buttonStatusText: string = "initial";
 
+//Measurements visibility paramters
+elementIsHiddenMeasurements: boolean = true;
+radioButtonValueFromStorage: string = "metric";  //default is metric, when storage is returned it will be reassigned
+
+
+
+
+ //async showRecipesForXYZ(){
+//
+    //hide-show main card of results on home page
+//    this.elementIsHidden = !this.elementIsHidden;  //toggle the element to visible when the button is pressed
+
+
+
+
 //create an instance of router,create an instance for the data service, 
   constructor(private routerRecipeDetails: Router, private dsRecipeDetails: DataService, private mhsRecipeDetails:MyHttpService) { 
     //addIcons({ logoIonic });
@@ -58,12 +73,14 @@ url: "https://api.spoonacular.com/recipes/" + this.ingrdntIDHere + "/information
 
   
 
+ 
+  
 
 
 
   async ngOnInit() {  
 
-  await this.initialiseButton();
+  await this.initialiseButton(); //initialise button text
    await this.getIngrdntID(); // Fetch updated  value
   
   await  this.getIngrdntInfo();  //fetch full recipe details 
@@ -72,6 +89,10 @@ url: "https://api.spoonacular.com/recipes/" + this.ingrdntIDHere + "/information
   
 
    await this.getButtonRecipeArrayStatus(); //takes recipe id and compares with value in array in order to find favourite status
+    
+
+ await this.getMeasureSettingFromStorage();
+
 
   }
 
@@ -108,75 +129,94 @@ url: "https://api.spoonacular.com/recipes/" + this.ingrdntIDHere + "/information
 async getIngrdntInfo()
 
 {
- //this.ingredients =  await this.ds.get('kw'); 
+      //this.ingredients =  await this.ds.get('kw'); 
 
- 
-console.log("Id for ingrdntIDHere in getIngrdntInfo() is " + this.ingrdntIDHere) 
- this.optionsHere.url = "https://api.spoonacular.com/recipes/" + this.ingrdntIDHere + "/information?apiKey=" + this.apiKey;
-  console.log("URL get request is now " + this.optionsHere.url)
+      
+      console.log("Id for ingrdntIDHere in getIngrdntInfo() is " + this.ingrdntIDHere) 
+      //UPDATES THE URL with the value from storage 
+      this.optionsHere.url = "https://api.spoonacular.com/recipes/" + this.ingrdntIDHere + "/information?apiKey=" + this.apiKey;
+        console.log("URL get request is now " + this.optionsHere.url)
 
- //this.optionsHere.url = this.optionsHere.url
- 
-  let resultHere = await this.mhsRecipeDetails.get(this.optionsHere)  //
- this.ingredientsFullDetails = resultHere.data;
+      //this.optionsHere.url = this.optionsHere.url
+      
+        let resultHere = await this.mhsRecipeDetails.get(this.optionsHere)  //
+      this.ingredientsFullDetails = resultHere.data;
 
-this.extendedIngredients =  resultHere.data.extendedIngredients;
+      this.extendedIngredients =  resultHere.data.extendedIngredients;
 
-this.analyzedInstructionsSteps = resultHere.data.analyzedInstructions[0].steps
-//this.measures = resultHere.data.extendedIngredients.measures;
-//console.log(this.ingredientsFullDetails) ///displays the object  in console 
- console.log("this is ingredientsFullDetails" + JSON.stringify(this.ingredientsFullDetails))  //displays the data received
-//console.log(JSON.stringify("this is extendedIngredients" + this.extendedIngredients))
+      this.analyzedInstructionsSteps = resultHere.data.analyzedInstructions[0].steps
+      //this.measures = resultHere.data.extendedIngredients.measures;
+      //console.log(this.ingredientsFullDetails) ///displays the object  in console 
+      console.log("this is ingredientsFullDetails" + JSON.stringify(this.ingredientsFullDetails))  //displays the data received
+      //console.log(JSON.stringify("this is extendedIngredients" + this.extendedIngredients))
 }
 
 
 
  addToFavourites(AddToFaves: string)
 {
- let check: boolean = false; 
+        let check: boolean = false; 
 
- console.log("Id for AddToFaves in addToFavourites() is " + AddToFaves);
- console.log("Id for ingrdntIDHere in addToFavourites() is " + this.ingrdntIDHere);
+        console.log("Id for AddToFaves in addToFavourites() is " + AddToFaves);
+        console.log("Id for ingrdntIDHere in addToFavourites() is " + this.ingrdntIDHere);
 
- for (let i = 0; i < this.favArray.length; i++) {
-    if (this.favArray[i] === AddToFaves) {
-  
-      console.log('Already in favourites favourites!');
-      alert('Already in favourites!');
-      check =true;
-      break;
-    }
-  }
-  
-  if(check===false){
-    this.favArray.push(AddToFaves)
-    console.log('Added to favourites!');
-    alert('Added to favourites!');
-    }
+        for (let i = 0; i < this.favArray.length; i++) {
+
+            //REMOVE ELEMENT
+            if(this.buttonFavouriteStatus===true)
+              console.log('Already in favourites so remove now!');
+            //IF buttonFavouriteStatus is true, it means it's in the favourites already, 
+            // and the button will say remove from favourites
+            // so when it is clicked again it is removed from the array
+            if (this.favArray[i] === AddToFaves) {
+          
+            var index = this.favArray.indexOf(AddToFaves); //get index of the element
+            this.favArray.splice(index, 1); //remove the element
+
+              console.log('removed favourites favourites!');     
+              this.buttonStatusText = "ADD TO FAVOURITES";
+              alert('Removed from favourites!');
+              // Save updated array to storage
+              //this.dsRecipeDetails.set('favArraySt', JSON.stringify(this.favArray));
+            // alert('Already in favourites!');
+              check =true;
+              break;
+            }
+          }
+          
+
+          //ADD ELEMENT
+          if(check===false){
+            this.favArray.push(AddToFaves)
+            console.log('Added to favourites!');
+            this.buttonStatusText = "REMOVE FROM FAVOURITES";
+            alert('Added to favourites!');
+            }
+            
+            // Save updated array to storage
+            this.dsRecipeDetails.set('favArraySt', JSON.stringify(this.favArray));
+
+        console.log("this.favArray is  " + this.favArray);
+
+   }
 
 
 
-     // Save updated array to storage
-    this.dsRecipeDetails.set('favArraySt', JSON.stringify(this.favArray));
-
-console.log("this.favArray is  " + this.favArray);
-
-  }
 
 
-async getFavArrayFromStorage(){
+  async getFavArrayFromStorage(){
 
-  let array = await this.dsRecipeDetails.get('favArraySt'); //fetch array from storage
+       let array = await this.dsRecipeDetails.get('favArraySt'); //fetch array from storage
 
-  //if there's no array in storage then create one
-if(array===null){
- await this.dsRecipeDetails.set('favArraySt', JSON.stringify(this.favArray)); //create array in storage
+          //if there's no array in storage then create one
+        if(array===null){
+        await this.dsRecipeDetails.set('favArraySt', JSON.stringify(this.favArray)); //create array in storage
 
-} else{
-  
-  this.favArray = JSON.parse(array);
-}
-  
+        } else{
+          
+          this.favArray = JSON.parse(array);
+        }
+          
 
 }
 
@@ -186,22 +226,67 @@ if(array===null){
  }
 
 
-    async getButtonRecipeArrayStatus(){
-        
-      for (let i = 0; i < this.favArray.length; i++) {
-        if (this.favArray[i] === this.ingrdntIDHere) {
-          console.log('Array value is ' + this.favArray[i]);
-          console.log('this.ingrdntIDHere value is ' + this.ingrdntIDHere);
-          this.buttonFavouriteStatus =true;
-          this.buttonStatusText = "REMOVE FROM FAVOURITES";
-          break;
-        }
-        else{
-          this.buttonStatusText="ADD TO FAVOURITES";
-          break;
-        }
 
-      }   
-    }
+
+
+
+
+    //Checks if ingrdntIDHere is in the fave array already and sets the fave button text state accordingly
+  async getButtonRecipeArrayStatus(){
+        
+
+        console.log(" getButtonRecipeArrayStatus() is running ");
+          
+            for (let i = 0; i < this.favArray.length; i++) {
+              if (this.favArray[i] === this.ingrdntIDHere) {
+                console.log('Array value is ' + this.favArray[i]);
+                console.log('this.ingrdntIDHere value is ' + this.ingrdntIDHere);
+                this.buttonFavouriteStatus =true;
+                this.buttonStatusText = "REMOVE FROM FAVOURITES";
+                break;
+              }
+            // else{
+            //   this.buttonStatusText="ADD TO FAVOURITES";
+              //  break;
+            //
+            
+            }
+
+            if (this.buttonFavouriteStatus === false)
+              {
+                this.buttonStatusText="ADD TO FAVOURITES";
+            }
+
+        }   
+
+
+
+
+//Get radio button value for measurements
+async getMeasureSettingFromStorage(){
+
+  let settingsVal = await this.dsRecipeDetails.get("radioButtonSt"); //fetch radioButtonSt from storage
+
+  //if there's no radioButtonSt in storage then create one
+if(settingsVal===null){
+ await this.dsRecipeDetails.set("radioButtonSt", (this.radioButtonValueFromStorage)); //create key in storage with default "metric"
+
+} 
+
+else{
+  
+  this.radioButtonValueFromStorage = settingsVal;
+}
+  
+        if( this.radioButtonValueFromStorage=== "metric"){   
+        this.elementIsHiddenMeasurements = true;}
+        else{ this.elementIsHiddenMeasurements = false;
+          }
+
+   }
+
+
+
+          
 
 }

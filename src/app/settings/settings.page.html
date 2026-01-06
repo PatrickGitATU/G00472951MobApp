@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -10,4 +10,29 @@
       <ion-title size="large">settings</ion-title>
     </ion-toolbar>
   </ion-header>
+<h1>Display Measurements In</h1>
+
+<!-- 
+<ion-radio-group value="settings">
+  <ion-radio value="metric">Metric</ion-radio><br />
+  <ion-radio value="us">US</ion-radio><br />
+</ion-radio-group>
+-->
+
+<!--ngModel binds the selected radio button value to the class variable radioButtonSelectedValue-->
+ <!--  and  when the button is pressed an event is triggered  which calls this method setMeasureSettingInStorage()   -->
+<ion-radio-group [(ngModel)]="radioButtonSelectedValue"   (ionChange)= "setMeasureSettingInStorage()" >
+  <ion-radio value="metric">Metric</ion-radio>
+  <ion-radio value="us">US</ion-radio>
+</ion-radio-group>
+
+
+
 </ion-content>
+
+
+<!--Radio button settings docs -->
+  <!--  https://ionicframework.com/docs/api/radio  -->
+  <!--  https://ionicframework.com/docs/api/radio  -->
+  <!--https://forum.ionicframework.com/t/how-to-ngmodel-with-ion-radio/103564 -->
+ <!-- https://ionicframework.com/docs/v3/api/components/radio/RadioGroup/-->

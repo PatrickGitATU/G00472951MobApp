@@ -5,12 +5,12 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 
 @Component({
   selector: 'app-favourite',
-  templateUrl: './favourite.page.html',
-  styleUrls: ['./favourite.page.scss'],
+  templateUrl: './favourites.page.html',
+  styleUrls: ['./favourites.page.scss'],
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
-export class FavouritePage implements OnInit {
+export class FavouritesPage implements OnInit {
 
   constructor() { }
 
