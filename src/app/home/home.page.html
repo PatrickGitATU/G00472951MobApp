@@ -5,17 +5,23 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
+<!--Author: Patrick Walsh -->
+<!-- The project was built using core Angular and Ionic concepts and re-utilised methods that were 
+ delivered by Gerard Harrison on the Mobile Applications Module.
+  -->
 <ion-content [fullscreen]="true">
  
-  <ion-input label = "Enter Ingredients" placeholder = "add here" [(ngModel)] = "ingredients"></ion-input> 
+<!-- Takes in search terms here, (ngModel) binds the search terms in the variable "ingredients"-->
+ <!-- The method showRecipesForXYZ() is called once the button is clicked which takes in this.ingredients -->
+<ion-input label = "Enter Ingredients" placeholder = "add here" [(ngModel)] = "ingredients"></ion-input> 
 <ion-button (click)="showRecipesForXYZ()" > Search </ion-button >
   
 
-
+<!--This content will be hidden until the search is triggered  -->
 <div [hidden]="elementIsHidden">
-  This content will be hidden initially and shown when the button is clicked.
+<!-- Test hidden  -->
 
+<!-- ngFor will populate the ion card with the matching results for the get request  -->
 <ion-card *ngFor="let ingredient of ingredientsInfo">
 
 
@@ -27,16 +33,17 @@
     <ion-card-subtitle></ion-card-subtitle>
   </ion-card-header>
   
-  
+ 
   <ion-card-content>
-    {{ingredient.id}}
+    
+    <!--Routes to recipe-details page when details is clicked  -->
     <ion-button (click)="goToRecipeDetails(ingredient.id)" > DETAILS </ion-button >
       
   </ion-card-content>
 
   <ion-card-content>
-    Here's a small text description for the card content. Nothing more, nothing less.
-    {{ingredient.id}}
+   
+  {{ingredient.id}}
   </ion-card-content>
 
 </ion-card>

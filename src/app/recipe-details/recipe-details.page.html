@@ -1,47 +1,29 @@
 
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title></ion-title>
-
-<!--
-<ion-buttons slot="end">
-  <ion-button (click)="addToFavourites(ingrdntIDHere)">
-    <ion-icon 
-      [name]="isFavorite ? 'heart' : 'heart-outline'" 
-      [color]="isFavorite ? 'danger' : 'medium'"
-      aria-label="Favorite">
-    </ion-icon>
-  </ion-button>
-</ion-buttons>
-
+<!--Author: Patrick Walsh -->
+<!-- The project was built using core Angular and Ionic concepts and re-utilised methods that were 
+ delivered by Gerard Harrison on the Mobile Applications Module.
 -->
 
-
-
-  </ion-toolbar>
+<ion-header [translucent]="true">
+<ion-toolbar>
+<ion-title></ion-title>
+</ion-toolbar>
 </ion-header>
-
-
-
-
-
 
 
 <ion-content [fullscreen]="true">
   
-  <!--{{ingrdntIDHere}} -->
+<!--{{ingrdntIDHere}} -->
 
-  <h1>Ingredients</h1>
+<h1>Ingredients</h1>
 
-
-
+<!-- Display the data for each field returned  using *ngFor -->
 <ion-card *ngFor="let ingredientExt of extendedIngredients">
 
  
 
-   <!--<ion-img [src]="ingredientExt.image" alt="Ingredient"></ion-img>-->
+  <!--<ion-img [src]="ingredientExt.image" alt="Ingredient"></ion-img>-->
   <!-- <img [src]="ingredientExt.image" alt="Ingredient" />-->
-
   <!--https://spoonacular.com/food-api/docs/show-images--> <!-- [src]="..." needed for property binding Ionic angualar -->
   <img [src]="'https://img.spoonacular.com/ingredients_100x100/' + ingredientExt.image" alt="ingredientExt.image" />   
 
@@ -56,43 +38,15 @@
     <!-- show original -->
    <p>{{ingredientExt.original}}</p>
     
-   <!-- show measures for metric -->
+   <!-- show/hide  measures for metric depending on the variable state-->
     <p [hidden]="!elementIsHiddenMeasurements">{{ingredientExt.measures.metric.amount }} {{ ingredientExt.measures.metric.unitLong }}</p>
 
-    <!-- show measures for us-->
+    <!-- show/hide measures for us depending on the variable state-->
     <p [hidden]="elementIsHiddenMeasurements">{{ingredientExt.measures.us.amount }} {{ ingredientExt.measures.us.unitLong }}</p>
 
-
-    <!-- <div [hidden]="elementIsHidden"></div> -->
-   <!-- {{ingredientExt.id}}-->
-  
-      
   </ion-card-content>
 
-
 </ion-card>
-
-
-
-
-
-
- <!-- <img alt="" src = {{ingredientsFullDetails.image}}/>-->
-<!-- <img [src]="i.image" alt="Ingredient Image" style="width:50px; height:50px; margin-right:10px;">-->
-
- <!-- 
-<ion-list>
-  <ion-item *ngFor="let i of extendedIngredients">
-    
-    <ion-label>{{i.id}}</ion-label>
-    <ion-label>{{i.aisle}}</ion-label>
-    <ion-label>{{i.image}}</ion-label>
-  </ion-item>
-</ion-list>
- 
--->
-
-
 
 
 
@@ -101,6 +55,7 @@
 
  <!-- <p>{{ingredientsFullDetails.instructions}}</p> -->
 
+ <!--Loop through the instructions returned using *ngFor and display using angular string interpolation-->
 <ion-card *ngFor="let instructions of analyzedInstructionsSteps" >
   <ion-card-header>
   <ion-card-subtitle></ion-card-subtitle>
@@ -112,12 +67,14 @@
 </ion-card>
 
 <p> </p>
-  <p> </p>
+<p> </p>
 
  <!-- https://ionicframework.com/docs/v4/api/buttons -->  
  <!-- https://ionicframework.com/docs/api/buttons#buttons-placement --> 
  <!--  https://ionicframework.com/docs/api/icon -->  
-   <!--  Icon won't work...tried everything... followed documentation -->  
+  <!--  Couldn't get the heart icon won't work...followed documentation -->  
+
+ <!-- Add to favourites function built using an array in Ionic storage -->    
 <ion-button aria-label="Favorite" (click)="addToFavourites(ingrdntIDHere)" > {{this.buttonStatusText }} 
 <ion-icon name="heart"  aria-hidden="true"></ion-icon> 
 </ion-button>

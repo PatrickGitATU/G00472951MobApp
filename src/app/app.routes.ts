@@ -20,6 +20,6 @@ export const routes: Routes = [
   },
   {
     path: 'favourite',
-    loadComponent: () => import('./favourite/favourite.page').then( m => m.FavouritePage)
+    loadComponent: () => import('./favourites/favourites.page').then( m => m.FavouritesPage)
   },
 ];
